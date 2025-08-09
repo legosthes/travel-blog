@@ -1,0 +1,22 @@
+{%extends 'layouts/default.html'%} {%block content%}
+<div class="mt-4 flex flex-row items-end">
+  <button class="btn btn-xs btn-secondary mr-2">
+    <a href="{%url 'articles:edit' article.id%}">Edit</a>
+  </button>
+
+  <form action="{%url 'articles:detail' article.id%}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="_method" value="delete" />
+    <button class="btn btn-xs btn-warning" type="submit">Delete</button>
+  </form>
+</div>
+
+<div class="mt-4">
+  <h2 class="text-2xl">{{article.title}}</h2>
+
+  <span class="text-sm text-gray-400">{{article.published_at}}</span>
+  <hr class="mt-4" />
+  <p class="mt-4">{{article.content | linebreaksbr}}</p>
+</div>
+
+{%endblock%}

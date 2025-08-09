@@ -4,6 +4,18 @@
   <hr />
 
   <h1 class="text-3xl my-4">Articles</h1>
+
+  <div class="flex flex-row flex-wrap">
+      {%for article in articles%}
+    <div class="box-border border-2 mb-4 mr-4 p-2 rounded-2xl w-[calc((100%-32px)/2)] h-auto">
+      <h2 class="text-2xl hover:text-accent"><a href="{%url 'articles:detail' article.id%}">{{article.title}}</a></h2>
+      <span class="text-sm text-gray-400">{{article.published_at}}</span>
+      <p>{{article.content|truncatewords:30}} <a class="hover:text-accent" href="{%url 'articles:detail' article.id%}">read more</a></p>
+    </div>
+  {%endfor%}
+  </div>
+  
+  
 </div>
 
 {%endblock%}

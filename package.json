@@ -1,0 +1,23 @@
+{
+  "name": "travelblog",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/legosthes/travel-blog#readme",
+  "bugs": {
+    "url": "https://github.com/legosthes/travel-blog/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/legosthes/travel-blog.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {},
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "esbuild": "0.25.8",
+    "tailwindcss": "^4.1.11"
+  }
+}

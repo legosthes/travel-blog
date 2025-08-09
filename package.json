@@ -15,14 +15,11 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "css:bundle": "npx @tailwindcss/cli -i src/styles/app.css -o public/styles/app.css --watch"
+    "css": "npx @tailwindcss/cli -i src/styles/app.css -o public/styles/app.css --watch"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.11",
     "daisyui": "^5.0.50",
-    "esbuild": "0.25.8"
-  },
-  "dependencies": {
     "tailwindcss": "^4.1.11"
   }
 }

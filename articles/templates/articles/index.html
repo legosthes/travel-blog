@@ -1,8 +1,9 @@
 {%extends 'layouts/default.html'%} {%block content%}
-<div class="m-4">
-  <h1 class="text-3xl">Articles</h1>
+<div>
+  <button class="btn btn-primary my-4"><a href="{%url 'articles:new'%}">New article</a></button>
+  <hr />
 
-  <button class="btn btn-primary">New article</button>
+  <h1 class="text-3xl my-4">Articles</h1>
 </div>
 
 {%endblock%}

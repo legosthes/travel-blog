@@ -11,7 +11,7 @@ def index(request):
         form.save()
         return redirect("articles:index")
     else:
-        articles = Article.objects.filter(is_published__isnull=False).order_by("-published_at")
+        articles = Article.objects.filter(is_published=True).order_by("-published_at")
         return render(request, "articles/index.html", {"articles": articles})
 
 

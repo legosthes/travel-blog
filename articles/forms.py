@@ -9,6 +9,6 @@ class ArticleForm(ModelForm):
         labels = {"title": "Title", "content": "Content", "is_published": "Publish"}
         widgets = {
             "title": TextInput(attrs={"class": "input w-full"}),
-            "content": Textarea(attrs={"class": "textarea w-full", "rows": 5}),
+            "content": Textarea(attrs={"class": "textarea w-full", "rows": 10}),
             "is_published": CheckboxInput(attrs={"class": "checkbox"}),
         }

@@ -21,13 +21,9 @@ def create(request):
 def new(request):
     return render(request, "sessions/new.html")
 
-@require_http_methods(["DELETE"])
-@require_POST
 def logout(request):
-    if request.POST["_method"]=="delete":
-        logout_user(request)
-        return redirect("sessions/new.html")
-    else:
-        return render(request,"articles:index")
+    logout_user(request)
+    return redirect("sessions:new")
+
 
     

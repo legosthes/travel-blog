@@ -56,7 +56,7 @@ def edit(request, id):
     form = ArticleForm(instance=article)
     return render(request, "articles/edit.html", {"article": article, "form": form})
 
-
+@login_required
 @require_POST
 def create(request, id):
     # 得到我現在所在的article id
@@ -72,7 +72,7 @@ def create(request, id):
     # 導向detail頁面
     return redirect("articles:detail", article.id)
 
-
+@login_required
 @require_POST
 def delete_comment(request, id):
     comment = Comment.objects.get(pk=id)

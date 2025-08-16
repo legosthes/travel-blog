@@ -40,12 +40,18 @@
       </button>
     </form>
   </div>
-  {%endfor%} {%for field in form%}
-  <form action="{%url 'articles:create_comment' article.id%}" method="post">
-    {% csrf_token %} {{field.label_tag}} {{field}}
-    <button class="btn btn-secondary btn-sm mt-4" type="submit">Send</button>
-  </form>
   {%endfor%}
+    {%if user.is_authenticated%}
+      {%for field in form%}
+      <form action="{%url 'articles:create_comment' article.id%}" method="post">
+        {% csrf_token %} {{field.label_tag}} {{field}}
+        <button class="btn btn-secondary btn-sm mt-4" type="submit">Send</button>
+      </form>
+      {%endfor%}
+    {%else%}
+    {%endif%}
+
+  
 </div>
 
 {%endblock%}

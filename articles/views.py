@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import ArticleForm
-from .models import Article
+from .forms import ArticleForm, CommentForm
+from .models import Article, Comment
 from django.views.decorators.http import require_POST
+from datetime import datetime
 
 
 # Create your views here.
@@ -23,19 +24,53 @@ def new(request):
 def detail(request, id):
     article = Article.objects.get(pk=id)
     if request.POST:
-        if request.POST["_method"]=="patch":
-            form = ArticleForm(request.POST,instance=article)
+        if request.POST["_method"] == "patch":
+            form = ArticleForm(request.POST, instance=article)
             form.save()
             return redirect("articles:detail", article.id)
-        if request.POST["_method"]=="delete":
+        if request.POST["_method"] == "delete":
             article.delete()
             return redirect("articles:index")
     else:
-        return render(request, "articles/detail.html", {"article": article})
+        # 顯示留言表格
+        comment_form = CommentForm()
+        # 顯示已經貼出來的留言
+        comments = article.comment_set.filter(deleted_at__isnull=True).order_by(
+            "-published_at"
+        )
+        # render出整個detail的頁面
+        return render(
+            request,
+            "articles/detail.html",
+            {"article": article, "form": comment_form, "comments": comments},
+        )
 
 
 def edit(request, id):
     article = Article.objects.get(pk=id)
     form = ArticleForm(instance=article)
-    return render(request, "articles/edit.html",{"article":article,"form":form})
+    return render(request, "articles/edit.html", {"article": article, "form": form})
 
+
+@require_POST
+def create(request, id):
+    # 得到我現在所在的article id
+    article = Article.objects.get(pk=id)
+    # 得到我request.POST傳進來的form
+    form = CommentForm(request.POST)
+    # 先暫存form
+    comment = form.save(commit=False)
+    # 把article存給comment的article欄位（因為request.POST並沒有傳進這個資訊）
+    comment.article = article
+    # 儲存comment
+    comment.save()
+    # 導向detail頁面
+    return redirect("articles:detail", article.id)
+
+
+@require_POST
+def delete_comment(request, id):
+    comment = Comment.objects.get(pk=id)
+    comment.deleted_at = datetime.now()
+    comment.save()
+    return redirect("articles:detail", comment.article_id)

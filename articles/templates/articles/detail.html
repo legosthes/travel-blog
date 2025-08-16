@@ -16,7 +16,36 @@
 
   <span class="text-sm text-gray-400">{{article.published_at}}</span>
   <hr class="mt-4" />
-  <p class="mt-4">{{article.content | linebreaksbr}}</p>
+  <p class="py-4 bg-gray-100">{{article.content | linebreaksbr}}</p>
+</div>
+
+<hr />
+
+<div class="comment-area">
+  <h3 class="text-xl">Comments</h3>
+
+  <!-- 顯示出comments -->
+  {%for comment in comments%}
+  <div
+    class="comments my-4 p-2 hover:shadow-sm bg-gray-100 rounded-2xl flex items-center justify-between"
+  >
+    <div class="comment">
+      <p class="my-2">{{comment.content}}</p>
+      <span class="text-xs">{{comment.published_at}}</span>
+    </div>
+    <form action="{%url 'articles:delete_comment' comment.id%}" method="post">
+      {% csrf_token %}
+      <button>
+        <i class="fa-solid fa-trash text-error cursor-pointer"></i>
+      </button>
+    </form>
+  </div>
+  {%endfor%} {%for field in form%}
+  <form action="{%url 'articles:create_comment' article.id%}" method="post">
+    {% csrf_token %} {{field.label_tag}} {{field}}
+    <button class="btn btn-secondary btn-sm mt-4" type="submit">Send</button>
+  </form>
+  {%endfor%}
 </div>
 
 {%endblock%}

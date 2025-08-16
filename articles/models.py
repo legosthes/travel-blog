@@ -8,3 +8,10 @@ class Article(models.Model):
     content = models.TextField(null=True)
     published_at = models.DateTimeField(auto_now_add=True)
     is_published = models.BooleanField(default=False, null=False)
+
+
+class Comment(models.Model):
+    content = models.TextField(null=False)
+    published_at = models.DateTimeField(auto_now_add=True)
+    article = models.ForeignKey(Article, default=None, on_delete=models.CASCADE)
+    deleted_at = models.DateTimeField(null=True, db_index=True)

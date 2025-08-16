@@ -1,4 +1,4 @@
-from .models import Article
+from .models import Article, Comment
 from django.forms import ModelForm, TextInput, Textarea, CheckboxInput
 
 
@@ -11,4 +11,14 @@ class ArticleForm(ModelForm):
             "title": TextInput(attrs={"class": "input w-full"}),
             "content": Textarea(attrs={"class": "textarea w-full", "rows": 10}),
             "is_published": CheckboxInput(attrs={"class": "checkbox"}),
+        }
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["content"]
+        labels = {"content": "Comment"}
+        widgets = {
+            "content": Textarea(attrs={"class": "textarea w-full", "rows": 5}),
         }

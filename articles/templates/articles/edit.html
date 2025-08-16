@@ -4,7 +4,6 @@
   <h2 class="text-2xl">{{article.title}}</h2>
 
   <form action="{%url 'articles:detail' article.id%}" method="post">
-    {% csrf_token %}
     <input type="hidden" name="_method" value="patch" />
     {% csrf_token %} {%for field in form%} {{field.label_tag}} {{field}}
     {%endfor%}

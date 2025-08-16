@@ -10,6 +10,7 @@ class Article(models.Model):
     is_published = models.BooleanField(default=False, null=False)
 
 
+
 class Comment(models.Model):
     content = models.TextField(null=False)
     published_at = models.DateTimeField(auto_now_add=True)

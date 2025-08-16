@@ -3,6 +3,7 @@ from .forms import ArticleForm, CommentForm
 from .models import Article, Comment
 from django.views.decorators.http import require_POST
 from datetime import datetime
+from django.contrib import messages
 
 
 # Create your views here.
@@ -10,6 +11,7 @@ def index(request):
     if request.method == "POST":
         form = ArticleForm(request.POST)
         form.save()
+        messages.success(request,"Article created.")
         return redirect("articles:index")
     else:
         articles = Article.objects.filter(is_published=True).order_by("-published_at")
@@ -27,9 +29,11 @@ def detail(request, id):
         if request.POST["_method"] == "patch":
             form = ArticleForm(request.POST, instance=article)
             form.save()
+            messages.success(request,"Article saved.")
             return redirect("articles:detail", article.id)
         if request.POST["_method"] == "delete":
             article.delete()
+            messages.error(request,"Article deleted.")
             return redirect("articles:index")
     else:
         # 顯示留言表格

@@ -21,12 +21,18 @@
         <a class="btn btn-ghost text-xl" href="{%url 'pages:home'%}">Home</a>
       </div>
       <div class="flex-none">
-        <ul class="menu menu-horizontal px-1">
+        <ul class="menu menu-horizontal px-1 items-center">
           <li><a href="{%url 'pages:about'%}">About</a></li>
           <li><a href="{%url 'articles:index'%}">Articles</a></li>
           <li><a href="{%url 'pages:contact'%}">Contact</a></li>
-          <li><a href="#">Login</a></li>
+          
+          {%if user.is_authenticated%}
+          <li>{{user.username}}</li>
+          <li><a href="{%url 'sessions:logout'%}">Logout</a></li>
+          {%else%}
+          <li><a href="{%url 'sessions:new'%}">Login</a></li>
           <li><a href="{%url 'users:new'%}">Register</a></li>
+          {%endif%}
         </ul>
       </div>
     </div>

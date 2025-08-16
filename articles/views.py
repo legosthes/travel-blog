@@ -4,6 +4,7 @@ from .models import Article, Comment
 from django.views.decorators.http import require_POST
 from datetime import datetime
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -17,7 +18,7 @@ def index(request):
         articles = Article.objects.filter(is_published=True).order_by("-published_at")
         return render(request, "articles/index.html", {"articles": articles})
 
-
+@login_required
 def new(request):
     form = ArticleForm(request.POST)
     return render(request, "articles/new.html", {"form": form})
@@ -25,7 +26,7 @@ def new(request):
 
 def detail(request, id):
     article = Article.objects.get(pk=id)
-    if request.POST:
+    if request.POST and request.user.is_authenticated:
         if request.POST["_method"] == "patch":
             form = ArticleForm(request.POST, instance=article)
             form.save()
@@ -49,7 +50,7 @@ def detail(request, id):
             {"article": article, "form": comment_form, "comments": comments},
         )
 
-
+@login_required
 def edit(request, id):
     article = Article.objects.get(pk=id)
     form = ArticleForm(instance=article)

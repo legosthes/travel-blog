@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect
 from .forms import UserForm
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError
 from django.contrib import messages
 
 # Create your views here.
